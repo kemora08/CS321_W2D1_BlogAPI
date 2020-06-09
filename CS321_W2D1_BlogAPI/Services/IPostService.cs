@@ -9,6 +9,8 @@ namespace CS321_W2D1_BlogAPI.Services
         IEnumerable<Post> GetAll();
         Post Get(int id);
         Post Add(Post post);
+        Post Update(Post updatedPost);
+
         void Remove(Post post);
     }
 }

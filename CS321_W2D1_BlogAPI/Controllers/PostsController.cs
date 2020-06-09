@@ -11,13 +11,15 @@ namespace CS321_W2D1_BlogAPI.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
+        private IPostService postService;
 
         // Constructor
         // IPostService is automatically injected by the ASP.NET framework, if you've
         // configured it properly in Startup.ConfigureServices()
-        public PostsController(/* TODO: add a parameter of type IPostService */)
+        public PostsController(IPostService _postService)
         {
-            //TODO: keep a reference to the service so we can use it in methods below
+            
+            _postService = postService;
         }
 
         // get all posts
@@ -26,6 +28,7 @@ namespace CS321_W2D1_BlogAPI.Controllers
         public IActionResult Get()
         {
             // TODO: return OK 200 status and list of posts
+            return Ok(_postService.GetAll());
         }
 
         // get specific post by id
@@ -35,6 +38,7 @@ namespace CS321_W2D1_BlogAPI.Controllers
         {
             // look up post by id
             // TODO: use _postsService to get post by id
+            var post = _postService.Get(id);
 
             // if not found, return 404 NotFound 
             if (post == null) return NotFound();
@@ -62,7 +66,7 @@ namespace CS321_W2D1_BlogAPI.Controllers
         public IActionResult Put(int id, [FromBody] Post updatedPost)
         {
             Post post;
-            // TODO: use _postService to update post. store returned Post in the post variable.
+            post = _postService.Update(updatedPost);
             if (post == null) return NotFound();
             return Ok(post);
         }
@@ -73,9 +77,12 @@ namespace CS321_W2D1_BlogAPI.Controllers
         public IActionResult Delete(int id)
         {
             // TODO: use _postService to get post by id
+            var post = _postService.Get(id);
             if (post == null) return NotFound();
             // TODO: use _postService to update post
+            _postService.Remove(post);
             return NoContent();
         }
+
     }
 }
