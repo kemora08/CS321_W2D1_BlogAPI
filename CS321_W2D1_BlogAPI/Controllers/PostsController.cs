@@ -11,12 +11,12 @@ namespace CS321_W2D1_BlogAPI.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
-        private IPostService postService;
+       
 
         // Constructor
         // IPostService is automatically injected by the ASP.NET framework, if you've
         // configured it properly in Startup.ConfigureServices()
-        public PostsController(IPostService _postService)
+        public PostsController(IPostService postService)
         {
             
             _postService = postService;
@@ -54,6 +54,7 @@ namespace CS321_W2D1_BlogAPI.Controllers
         {
             // add the new post
             // TODO: use _postService to add newPost
+            _postService.Add(newPost);
 
             // return a 201 Created status. This will also add a "location" header
             // with the URI of the new post. E.g., /api/posts/99, if the new is 99
